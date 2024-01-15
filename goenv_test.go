@@ -1,9 +1,10 @@
 package goenv_test
 
 import (
-	"Merapi-Tani-Instrument/goenv"
 	"os"
 	"testing"
+
+	goenv "github.com/Merapi-Tani-Instrument/GoEnv"
 )
 
 func TestLoadEnv(t *testing.T) {
