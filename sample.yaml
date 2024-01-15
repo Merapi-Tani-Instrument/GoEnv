@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: test-engine
+    version: 0.0.1
+  profiles.active: local
+  main:
+    web-environment: true
+  sleuth:
+    enabled: true
+    sampler:
+     percentage: 0.1
+  zipkin:
+    enabled: true
+    baseUrl: some-zipkin-server.com
+    sender:
+      type: web
