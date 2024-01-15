@@ -1,7 +1,7 @@
 package goenv_test
 
 import (
-	"mertani/goenv"
+	"Merapi-Tani-Instrument/goenv"
 	"os"
 	"testing"
 )
