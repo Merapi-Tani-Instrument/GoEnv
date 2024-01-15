@@ -20,7 +20,7 @@ func pop(alist *[]string) {
 	*alist = (*alist)[:f-1]
 }
 
-func Parse(fs fs.File) (map[string]string, error) {
+func Parse(fs fs.File) (GoEnv, error) {
 	res := make(map[string]string)
 	s, err := fs.Stat()
 	if err != nil {
