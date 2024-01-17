@@ -34,7 +34,6 @@ func Parse(fs fs.File) (GoEnv, error) {
 		scanner.Buffer(buf, maxSize)
 	}
 
-	var output strings.Builder
 	var prop []string
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -46,9 +45,6 @@ func Parse(fs fs.File) (GoEnv, error) {
 			arrayIndex = -1
 		}
 		if ignore.FindString(line) != "" || !strings.Contains(line, ":") {
-			if output.Len() > 0 {
-				output.WriteString("\n")
-			}
 			continue
 		}
 		tabReg := ""
@@ -56,22 +52,22 @@ func Parse(fs fs.File) (GoEnv, error) {
 			tabReg += `\s`
 		}
 		index := 0
-		if ll := regexp.MustCompile(fmt.Sprintf("(%s)", tabReg)).FindAllString(strings.Split(line, ":")[0], -1); ll != nil {
+		resultProps := strings.Split(line, ":")[0]
+		if ll := regexp.MustCompile(fmt.Sprintf("(%s)", tabReg)).FindAllString(resultProps, -1); ll != nil {
 			index = len(ll)
 		}
-		resultProps := regexp.MustCompile(`(.+):[\s.]?`).FindStringSubmatch(line)
 		if len(resultProps) < 2 {
 			continue
 		}
 		if index == 0 {
 			prop = nil
-			prop = append(prop, strings.TrimSpace(resultProps[1]))
+			prop = append(prop, strings.TrimSpace(resultProps))
 		} else {
 			propName := ""
 			if arrayLine != "" {
 				arrayIndex++
 			} else {
-				propName = strings.TrimSpace(resultProps[1])
+				propName = strings.TrimSpace(resultProps)
 			}
 			for arrayIndex < 0 && prop != nil && index < len(prop) {
 				pop(&prop)
